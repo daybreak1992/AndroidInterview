@@ -511,3 +511,391 @@
     - 功能完成后调用 webpack 提供的回调。
 
     整个webpack流程由compiler和compilation构成,compiler只会创建一次，compilation如果开起了watch文件变化，那么会多次生成compilation. 那么这2个类下面生成了需要事件钩子
+
+##### Web基础
+
+[前端开发面试题](https://github.com/markyun/My-blog/blob/master/Front-end-Developer-Questions/Questions-and-Answers/README.md)
+
+- CSS选择符
+
+  1. id选择器（ #myid）
+  2. 类选择器（.myclassname）
+  3. 标签选择器（div, h1, p）
+  4. 相邻选择器（h1 + p）
+  5. 子选择器（ul > li）
+  6. 后代选择器（li a）
+  7. 通配符选择器（ * ）
+  8. 属性选择器（a[rel = "external"]）
+  9. 伪类选择器（a:hover, li:nth-child）
+
+- CSS3新增伪类
+
+  ```
+  ::after			在元素之前添加内容,也可以用来做清除浮动。
+  ::before			在元素之后添加内容
+  :enabled  		
+  :disabled 		控制表单控件的禁用状态。
+  :checked        单选框或复选框被选中。
+  ```
+
+- 如何居中div
+
+  - 水平居中：给div设置一个宽度，然后添加margin:0 auto属性
+
+    ```css
+    div{
+     	width:200px;
+     	margin:0 auto;
+      }
+    ```
+
+
+  - 让绝对定位的div居中
+
+    ```css
+    div {
+     	position: absolute;
+     	width: 300px;
+     	height: 300px;
+     	margin: auto;
+     	top: 0;
+     	left: 0;
+     	bottom: 0;
+     	right: 0;
+     	background-color: pink;	/* 方便看效果 */
+     }
+    ```
+
+  - 水平垂直居中
+
+    ```css
+    确定容器的宽高 宽500 高 300 的层
+    设置层的外边距
+    div {
+     	position: relative;		/* 相对定位或绝对定位均可 */
+     	width:500px;
+     	height:300px;
+     	top: 50%;
+     	left: 50%;
+     	margin: -150px 0 0 -250px;     	/* 外边距为自身宽高的一半 */
+     	background-color: pink;	 	/* 方便看效果 */
+      }
+
+    未知容器的宽高，利用 `transform` 属性
+    div {
+     	position: absolute;		/* 相对定位或绝对定位均可 */
+     	width:500px;
+     	height:300px;
+     	top: 50%;
+     	left: 50%;
+     	transform: translate(-50%, -50%);
+     	background-color: pink;	 	/* 方便看效果 */
+     }
+
+    利用 flex 布局
+    实际使用时应考虑兼容性
+    .container {
+     	display: flex;
+     	align-items: center; 		/* 垂直居中 */
+     	justify-content: center;	/* 水平居中 */
+
+     }
+     .container div {
+     	width: 100px;
+     	height: 100px;
+     	background-color: pink;		/* 方便看效果 */
+     }
+    ```
+
+- display有哪些值？说明他们的作用。
+
+  ```css
+  block       	块类型。默认宽度为父元素宽度，可设置宽高，换行显示。
+  none        	缺省值。象行内元素类型一样显示。
+  inline      	行内元素类型。默认宽度为内容宽度，不可设置宽高，同行显示。
+  inline-block    默认宽度为内容宽度，可以设置宽高，同行显示。
+  list-item   	象块类型元素一样显示，并添加样式列表标记。
+  table       	此元素会作为块级表格来显示。
+  inherit     	规定应该从父元素继承 display 属性的值。
+  ```
+
+- position的值relative和absolute定位原点是
+
+  ```Css
+  absolute
+  生成绝对定位的元素，相对于值不为 static的第一个父元素进行定位。
+  fixed （老IE不支持）
+  生成绝对定位的元素，相对于浏览器窗口进行定位。
+  relative
+  生成相对定位的元素，相对于其正常位置进行定位。
+  static
+  默认值。没有定位，元素出现在正常的流中（忽略 top, bottom, left, right z-index 声明）。
+  inherit
+  规定从父元素继承 position 属性的值。
+  ```
+
+- CSS3有哪些新特性
+
+  ```css
+  新增各种CSS选择器	（: not(.input)：所有 class 不是“input”的节点）
+  圆角		    （border-radius:8px）
+  多列布局	    （multi-column layout）
+  阴影和反射	（Shadow\Reflect）
+  文字特效		（text-shadow、）
+  文字渲染		（Text-decoration）
+  线性渐变		（gradient）
+  旋转		 	（transform）
+  缩放,定位,倾斜,动画,多背景
+  例如:transform:\scale(0.85,0.90)\ translate(0px,-30px)\ skew(-9deg,0deg)\Animation:
+  ```
+
+- 请解释一下CSS3的Flexbox（弹性盒布局模型）,以及适用场景？
+
+  ```
+  一个用于页面布局的全新CSS3功能，Flexbox可以把列表放在同一个方向（从上到下排列，从左到右），并让列表能延伸到占用可用的空间。
+     较为复杂的布局还可以通过嵌套一个伸缩容器（flex container）来实现。
+     采用Flex布局的元素，称为Flex容器（flex container），简称"容器"。
+     它的所有子元素自动成为容器成员，称为Flex项目（flex item），简称"项目"。
+     常规布局是基于块和内联流方向，而Flex布局是基于flex-flow流可以很方便的用来做局中，能对不同屏幕大小自适应。
+     在布局上有了比以前更加灵活的空间。
+
+     具体：http://www.w3cplus.com/css3/flexbox-basics.html
+  ```
+
+- 请解释一下为什么需要清除浮动？清除浮动的方式
+
+  清除浮动是为了清除使用浮动元素产生的影响。浮动的元素，高度会塌陷，而高度的塌陷使我们页面后面的布局不能正常显示。
+
+  ```css
+    1、父级div定义height；
+    2、父级div 也一起浮动；
+    3、常规的使用一个class；
+    	.clearfix::before, .clearfix::after {
+    	    content: " ";
+    	    display: table;
+    	}
+    	.clearfix::after {
+    	    clear: both;
+    	}
+    	.clearfix {
+    	    *zoom: 1;
+    	}
+
+    4、SASS编译的时候，浮动元素的父级div定义伪类:after
+    	&::after,&::before{
+    	    content: " ";
+            visibility: hidden;
+            display: block;
+            height: 0;
+            clear: both;
+    	}
+
+    解析原理：
+    1) display:block 使生成的元素以块级元素显示,占满剩余空间;
+    2) height:0 避免生成内容破坏原有布局的高度。
+    3) visibility:hidden 使生成的内容不可见，并允许可能被生成内容盖住的内容可以进行点击和交互;
+    4）通过 content:"."生成内容作为最后一个元素，至于content里面是点还是其他都是可以的，例如oocss里面就有经典的 content:".",有些版本可能content 里面内容为空,一丝冰凉是不推荐这样做的,firefox直到7.0 content:”" 仍然会产生额外的空隙；
+    5）zoom：1 触发IE hasLayout。
+
+    通过分析发现，除了clear：both用来闭合浮动的，其他代码无非都是为了隐藏掉content生成的内容，这也就是其他版本的闭合浮动为什么会有font-size：0，line-height：0。
+  ```
+
+- JavaScript原型，原型链 ? 有什么特点？
+
+  ```javascript
+   每个对象都会在其内部初始化一个属性，就是prototype(原型)，当我们访问一个对象的属性时，
+   如果这个对象内部不存在这个属性，那么他就会去prototype里找这个属性，这个prototype又会有自己的prototype，
+   于是就这样一直找下去，也就是我们平时所说的原型链的概念。
+   关系：instance.constructor.prototype = instance.__proto__
+
+   特点：
+   JavaScript对象是通过引用来传递的，我们创建的每个新对象实体中并没有一份属于自己的原型副本。当我们修改原型时，与之相关的对象也会继承这一改变。
+
+
+    当我们需要一个属性的时，Javascript引擎会先看当前对象中是否有这个属性， 如果没有的话，
+    就会查找他的Prototype对象是否有这个属性，如此递推下去，一直检索到 Object 内建对象。
+   	function Func(){}
+   	Func.prototype.name = "Sean";
+   	Func.prototype.getInfo = function() {
+   	  return this.name;
+   	}
+   	var person = new Func();//现在可以参考var person = Object.create(oldObject);
+   	console.log(person.getInfo());//它拥有了Func的属性和方法
+   	//"Sean"
+   	console.log(Func.prototype);
+   	// Func { name="Sean", getInfo=function()}
+  ```
+
+- Javascript如何实现继承？
+
+  ```javascript
+   1、构造继承
+   2、原型继承
+   3、实例继承
+   4、拷贝继承
+
+   原型prototype机制或apply和call方法去实现较简单，建议使用构造函数与原型混合方式。
+   
+   	function Parent(){
+   		this.name = 'wang';
+   	}
+
+   	function Child(){
+   		this.age = 28;
+   	}
+   	Child.prototype = new Parent();//继承了Parent，通过原型
+
+   	var demo = new Child();
+   	alert(demo.age);
+   	alert(demo.name);//得到被继承的属性
+  ```
+
+- javascript创建对象的几种方式？
+
+  ```javascript
+   javascript创建对象简单的说,无非就是使用内置对象或各种自定义对象，当然还可以用JSON；但写法有很多种，也能混合使用。
+
+   1、对象字面量的方式
+   	person={firstname:"Mark",lastname:"Yun",age:25,eyecolor:"black"};
+
+   2、用function来模拟无参的构造函数
+   	function Person(){}
+   	var person=new Person();//定义一个function，如果使用new"实例化",该function可以看作是一个Class
+   	person.name="Mark";
+   	person.age="25";
+   	person.work=function(){
+   	alert(person.name+" hello...");
+   	}
+   	person.work();
+
+   3、用function来模拟参构造函数来实现（用this关键字定义构造的上下文属性）
+   	function Pet(name,age,hobby){
+   	   this.name=name;//this作用域：当前对象
+   	   this.age=age;
+   	   this.hobby=hobby;
+   	   this.eat=function(){
+   	      alert("我叫"+this.name+",我喜欢"+this.hobby+",是个程序员");
+   	   }
+   	}
+   	var maidou =new Pet("麦兜",25,"coding");//实例化、创建对象
+   	maidou.eat();//调用eat方法
+
+
+   4、用工厂方式来创建（内置对象）
+   	 var wcDog =new Object();
+   	 wcDog.name="旺财";
+   	 wcDog.age=3;
+   	 wcDog.work=function(){
+   	   alert("我是"+wcDog.name+",汪汪汪......");
+   	 }
+   	 wcDog.work();
+
+
+   5、用原型方式来创建
+   	function Dog(){
+
+   	 }
+   	 Dog.prototype.name="旺财";
+   	 Dog.prototype.eat=function(){
+   	 alert(this.name+"是个吃货");
+   	 }
+   	 var wangcai =new Dog();
+   	 wangcai.eat();
+
+
+   6、用混合方式来创建
+   	function Car(name,price){
+   	  this.name=name;
+   	  this.price=price;
+   	}
+   	 Car.prototype.sell=function(){
+   	   alert("我是"+this.name+"，我现在卖"+this.price+"万元");
+   	  }
+   	var camry =new Car("凯美瑞",27);
+   	camry.sell();
+  ```
+
+- 什么是闭包（closure），为什么要用它？
+
+  ```javascript
+   闭包是指有权访问另一个函数作用域中变量的函数，创建闭包的最常见的方式就是在一个函数内创建另一个函数，通过另一个函数访问这个函数的局部变量,利用闭包可以突破作用链域，将函数内部的变量和方法传递到外部。
+
+   闭包的特性：
+   1.函数内再嵌套函数
+   2.内部函数可以引用外层的参数和变量
+   3.参数和变量不会被垃圾回收机制回收
+
+   //li节点的onclick事件都能正确的弹出当前被点击的li索引
+    <ul id="testUL">
+       <li> index = 0</li>
+       <li> index = 1</li>
+       <li> index = 2</li>
+       <li> index = 3</li>
+   </ul>
+   <script type="text/javascript">
+     	var nodes = document.getElementsByTagName("li");
+   	for(i = 0;i<nodes.length;i+= 1){
+   	    nodes[i].onclick = (function(i){
+   	              return function() {
+   	                 console.log(i);
+   	              } //不用闭包的话，值每次都是4
+   	            })(i);
+   	}
+   </script>
+
+   执行say667()后,say667()闭包内部变量会存在,而闭包内部函数的内部变量不会存在
+   使得Javascript的垃圾回收机制GC不会收回say667()所占用的资源
+   因为say667()的内部函数的执行需要依赖say667()中的变量
+   这是对闭包作用的非常直白的描述
+
+     function say667() {
+   	// Local variable that ends up within closure
+   	var num = 666;
+   	var sayAlert = function() {
+   		alert(num);
+   	}
+   	num++;
+   	return sayAlert;
+   }
+
+    var sayAlert = say667();
+    sayAlert()//执行结果应该弹出的667
+  ```
+
+- DOM操作——怎样添加、移除、移动、复制、创建和查找节点?
+
+  ```javascript
+    （1）创建新节点
+      createDocumentFragment()    //创建一个DOM片段
+      createElement()   //创建一个具体的元素
+      createTextNode()   //创建一个文本节点
+    （2）添加、移除、替换、插入
+      appendChild()
+      removeChild()
+      replaceChild()
+      insertBefore() //在已有的子节点前插入一个新的子节点
+    （3）查找
+      getElementsByTagName()    //通过标签名称
+      getElementsByName()    //通过元素的Name属性的值(IE容错能力较强，会得到一个数组，其中包括id等于name值的)
+      getElementById()    //通过元素Id，唯一性
+  ```
+
+- .call() 和 .apply() 的区别？
+
+  ```javascript
+     例子中用 add 来替换 sub，add.call(sub,3,1) == add(3,1) ，所以运行结果为：alert(4);
+
+     注意：js 中的函数其实是对象，函数名是对 Function 对象的引用。
+
+   	function add(a,b)
+   	{
+   	    alert(a+b);
+   	}
+
+   	function sub(a,b)
+   	{
+   	    alert(a-b);
+   	}
+
+   	add.call(sub,3,1);
+  ```
